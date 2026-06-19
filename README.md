@@ -151,7 +151,7 @@ PEAT is developed under the **OPTIBEST Premium Framework** — a systematic meth
 - **Five Verification Methods**: Multi-attempt, Perspective, Alternative, Theoretical, Fresh
 - **EFE Filter**: Seven sustainable design principles for responsible engineering
 
-All framework documents are **CC0 1.0 Universal (Public Domain)** — free to use, modify, and distribute for any purpose.
+All framework documents are **CC0 1.0 Universal (Public Domain)** — free to use, modify, and distribute, at your own risk | intent: use of good alone (nothing else necessitated).
 
 ---
 
