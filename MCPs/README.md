@@ -1,6 +1,6 @@
 # EFE-MCP Servers — Engineering for Everyone
 
-> **EFE (Engineering For Everyone)** is a sustainable engineering design framework integrating EFE Filter principles (7 pillars) with the OPTIBEST Premium Framework (7 dimensions, 9 gated phases, 5-method plateau verification). These MCP servers expose EFE engineering tools as callable AI agent tools via the **Model Context Protocol**.
+> **EFE (EquiFree Economy)** is a sustainable engineering design framework integrating EFE Filter principles (7 pillars) with the OPTIBEST Premium Framework (7 dimensions, 9 gated phases, 5-method plateau verification). These MCP servers expose EFE engineering tools as callable AI agent tools via the **Model Context Protocol**.
 
 **8 MCP servers** — self-contained Python `FastMCP` servers for engineering analysis, materials science, lifecycle assessment, standards references, project tracking, and documentation generation.
 
