@@ -1,0 +1,33 @@
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Julia
+*.ji
+*.o
+*.so
+Manifest.toml
+data/
+figures/
+
+# IDE
+.idea/
+.vscode/
+*.kate-swp
+
+# Firebase
+.firebase/
+.firebase-debug.log
+
+# Misc
+*.tar.gz
