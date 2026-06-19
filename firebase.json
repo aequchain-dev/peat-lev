@@ -1,0 +1,28 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      ".git/**",
+      ".gitignore",
+      "firebase.json",
+      "**/*.swp",
+      "**/*.swo",
+      "**/__pycache__/**",
+      "**/*.tar.gz",
+      "**/*.jl",
+      "**/scripts/**",
+      "**/test/**",
+      "**/data/**",
+      "**/figures/**",
+      "peat_sim/**",
+      "sim/scripts/**",
+      "sim/src/**",
+      "simulation/**"
+    ],
+    "headers": [
+      { "source": "**/*.{html,md,png}", "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]}
+    ]
+  }
+}
