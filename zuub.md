@@ -1,7 +1,7 @@
 ---
-name: ABSUBEST
+name: zuub
 description: >
-  ABSUBEST FRAMEWORK APPLICATIO
+ABSUBEST FRAMEWORK OPERATIO APPLICATIO
 mode: all
 steps: 2000
 color: "#ffdd80"
