@@ -477,6 +477,146 @@ values were right; now they are checkable.
 
 ---
 
+## ADDENDUM A — Computer-processor printing: direction and feasibility
+
+**Added:** v1.1 · **Evidence class:** MODELLED, like everything else here
+**Question this answers:** *"one goal: print computer processes [possible or not?]"*
+
+### A.0 What the question resolves to
+
+Three readings, all worth answering separately:
+
+| Reading | Answer | Where |
+|---|---|---|
+| Print a **CPU die** in silicon | Tiered — see A.1 | this addendum |
+| Print a **computer** (PCB + commodity IC) | Already in the blueprint | Genesis §23 |
+| Print running **software processes** | The CM4 runs Klipper + the EVER node; software is not printed | out of scope |
+
+### A.1 The tiered verdict
+
+| Tier | Goal | Verdict |
+|---|---|---|
+| 1 | Print a **computer**: PCB with silver-paste traces, MSLA substrate, commodity IC placed and bonded | ✅ **In the blueprint now** |
+| 2 | Print **simple silicon logic**: 100–1,000 transistors — ALU slice, register file, 4-bit datapath | ✅ Achievable with enumerable additions |
+| 3 | Print a **1970s-class CPU**: 2–8k transistors at ~8 µm — 6502-class | ⚠️ Geometrically feasible; multi-year, dangerous, ~$20–50k |
+| 4 | Print a **modern CPU**: 3 nm, ~10¹⁰ transistors | ❌ **No. Not a matter of time or money** |
+
+Tier 4 is not an ambition problem. It requires EUV lithography at 13.5 nm,
+multi-patterning, and a facility in the $10–20 B range with material purity no
+community lab can approach. Stating that plainly is more useful than a roadmap
+that pretends otherwise.
+
+### A.2 The binding constraint is feature size — nothing else
+
+| Processor | Year | Node | Transistors |
+|---|---|---|---|
+| Intel 4004 | 1971 | 10 µm | 2,300 |
+| MOS 6502 | 1975 | 8 µm | 3,510 |
+| Zilog Z80 | 1976 | 4 µm | 8,500 |
+| Intel 8086 | 1978 | 3 µm | 29,000 |
+| Modern (3 nm) | 2024 | 3 nm | ~25,000,000,000 |
+
+The machine's MSLA resolves **47–68 µm** — roughly 1960s/early-70s territory,
+good for a few hundred transistors.
+
+**Area is not the constraint, and this is the non-obvious part.** A 4004 die
+is 12 mm². Scaled from 10 µm to 47 µm it becomes ~250 mm², against an exposure
+field of ~17,000 mm². There is room. What is missing is resolution, alignment
+accuracy across 5–7 mask layers, and yield — in that order.
+
+### A.3 The one high-leverage addition
+
+**Reduction optics on the existing MSLA.**
+
+```
+68 µm pixel ÷ 8× reduction  =  8.5 µm   (6502-class)
+exposure field 132×74 mm    ÷ 8        =  ~16×9 mm
+6502 die 3.9 × 4.3 mm                   fits with margin
+```
+
+The optic is a commodity projection lens, not an exotic component — $500–2,000.
+This single addition moves the machine two decades down the process node.
+
+A more powerful laser moves it **zero**. Lithography resolution is set by
+wavelength and numerical aperture, not by power; power buys cutting speed and
+nothing about feature size. This was the top-ranked answer from the decision
+engine consulted on the question, and it is wrong.
+
+### A.4 Have versus missing
+
+| Already on the machine | Missing for silicon |
+|---|---|
+| 405 nm UV — photoresist exposure | Reduction optics |
+| 200 °C bed — soft bake ✓ | Doping furnace (900–1,100 °C) |
+| Heated chamber, HEPA/carbon enclosure | Wet-etch handling (BOE/HF) |
+| 5 W 450 nm laser — die scribing, marking | Metallisation |
+| Silver-paste extruder — contacts | Dicing |
+| Eddy-current head (conductors) | Wire bonding / die attach |
+
+### A.5 Buy the hard parts
+
+**Pre-processed wafers are commodity inputs** — oxidised, doped, ~$50–100 each.
+This is the same move as buying filament instead of making plastic, and it is
+the difference between a $5 k project and a $50 k one. It removes the furnace
+from the critical path and reduces the machine's job to:
+
+```
+lithography → etch → metallise → dice → package
+```
+
+A furnace at 900–1,100 °C is genuinely dangerous and is not a tool to add
+because it is reachable. It is reachable and it should still be bought, not
+built, until there is a reason not to.
+
+### A.6 The cheapest addition with the highest value
+
+A **four-point probe** measures doped-layer sheet resistance directly. It costs
+about $50 in probes plus a bench source-measure unit. Eddy-current testing does
+not work on silicon — it needs a conductor — but sheet-resistance metrology is
+the sibling technique and is a real in-line process step for exactly this work.
+
+It is therefore registered as a **sensor process** (`four_point_probe`) alongside
+ECT, on the same dock, emitting no beam. See `data/processes.toml`.
+
+### A.7 Safety — stated because it is the part people skip
+
+Wet etching for silicon uses buffered oxide etch and, for some steps, hydrofluoric
+acid. HF is not a "strong acid" hazard — it is a systemic toxicity hazard that
+penetrates skin and binds calcium, and exposure is survivable-looking until it is
+not. A calcium gluconate gel supply and a written exposure procedure are part of
+the bill of materials for this direction, not an afterthought.
+
+Similarly, a doping furnace at 1,100 °C inside a shared workshop is a fire and
+burn hazard that does not care about the rest of the machine's interlocks. This
+direction should not share a critical path with any other work until it has its
+own risk assessment.
+
+### A.8 Consistency with the source
+
+The Genesis blueprint declares this an **immutable constraint**: *"Sub-100 nm
+semiconductor lithography requires photolithography tools beyond additive
+printing capability. ICs remain an external input."* That statement is correct
+and stands unchanged. This addendum does not soften it. It answers the question
+the constraint leaves open: **how far down can a community lab actually reach** —
+and the answer is further than "ICs are external input" implies, but nowhere near
+a modern process node, and the gap between those two facts is worth writing down.
+
+### A.9 Gated roadmap
+
+| Gate | Passes when |
+|---|---|
+| G-1 | A four-point probe is characterised on a known-doped coupon; sheet resistance agrees with the datasheet within 5 % |
+| G-2 | Reduction optics hold 8.5 µm features across a 16 × 9 mm field, measured |
+| G-3 | A printed resistor/diode network on silicon passes electrical test |
+| G-4 | A working NMOS transistor, measured I–V |
+| G-5 | Ten transistors in series with working yield |
+| G-6 | An ALU slice (≈100 transistors) with a measured truth table |
+
+G-4 is the honest first milestone that means anything. Everything before it is
+setup, and setup can feel like progress without being any.
+
+---
+
 ## 10. Disclosure block
 
 ```
